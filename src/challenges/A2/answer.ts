@@ -2,18 +2,42 @@
  * In this challenge, you have to add a list of skills to each group (based on 
  * students skills in the group). Duplicates skills for one group is not permitted. Skills must be
  * sorted alphabatically. Groups order, students order and students skills order must remain
- * untouched.
+ * untouched. 
  * 
  * @param groups List of groups without skills, but with students
  * @returns List of groups with a new prop skills
  */
 
+// https://tenor.com/bfGzp.gif
+
+
 // ↓ uncomment bellow lines and add your response!
-/*
+
 export default function ({ groups }: { groups: Group[] }): GroupWithSills[] {
-    return [];
+    // you have to add a list of skills to each group(based on students skills in the group)Duplicates skills for one group is not permitted.
+    let result: GroupWithSills[] = []
+
+    groups.forEach((group : Group) => {
+        let skills: string[] = [];
+
+        group.students.forEach((student) => {
+            student.skills.forEach((skill: string) => {
+                if (!skills.includes(skill)) {
+                    skills.push(skill);
+                }
+            })
+        })
+        // Skills must be sorted alphabatically.
+
+        let obj: GroupWithSills = {
+            ...group,
+            skills: skills.sort()
+        }
+        result.push(obj)
+    })
+    return result;
 }
-*/
+
 
 // used interfaces, do not touch
 interface Student {

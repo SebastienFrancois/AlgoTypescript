@@ -1,7 +1,7 @@
 /**
  * In this challenge, you have to regroup messages into an array of day based on their
  * sentAt property.
- * You have to manipulate dates in vanillaJS. Be carefull to call, if needed, setUTCHours, setUTCMinutes, ... 
+ * You have to manipulate dates in vanillaJS. Be carefull to call, if needed, setUTCHours, setUTCMinutes, ...
  * instead of setHouts, setMinutes, ... to avoid timezone offsets!
  *
  * Example:
@@ -21,26 +21,51 @@
  *          ]
  *      },
  * ]
- * 
+ *
  * @param messages List of messages, unsorted and not grouped in days
  * @returns Sorted list of days (only days with messages!) with a list of sorted messages of the day
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
+
 export default function ({ messages }: { messages: Message[] }): DayMessages[] {
-    return [];
+  let dates: any = [];
+  const messagesLog = {};
+  messages.forEach((message) => {
+    const utc0 = new Date(message.sentAt);
+    utc0.setUTCHours(0, 0, 0, 0);
+    const dayToIsoString = utc0.toISOString();
+    
+    // for (let day of ){
+    //     if(!messagesLog[day]){
+    //         messagesLog[day] = dayToIsoString
+    //     }
+    // }
+    // console.log(messagesLog)
+    // dates.filter(d => d.day === utc0.toISOString() )
+    // if(!dates.includes(date => date.day === utc0.toISOString())){
+    //     dates.push({day: utc0.toISOString()})
+    // }
+
+    // console.log(dates.includes(date => date.day === utc0.toISOString()))
+
+    // if(dates.includes(date => date.day === utc0.toISOString())){
+    //     // dates.push({day: utc0.toISOString()})
+    // }else{
+
+    // }
+  });
+  return dates;
 }
-*/
 
 // used interfaces, do not touch
 export interface Message {
-    author: string;
-    sentAt: string;
-    message: string;
+  author: string;
+  sentAt: string;
+  message: string;
 }
 
 export interface DayMessages {
-    day: string;
-    messages: Message[];
+  day: string;
+  messages: Message[];
 }

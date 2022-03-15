@@ -7,11 +7,26 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
+
+// inputs = tableau d'objets {name: string, age: number} 
+// outputs = tableau d'objets trier age -->  
+// Mettre dans l'ordre avec sort array.sort(a.name,b.name )
+
 export default function ({ students }: { students: Student[] }): Student[] {
-    return [];
+    
+    return students.sort((a: Student ,b: Student ) => {
+        if(a.age === b.age){
+            if(a.name > b.name){
+                return 1
+            }else{
+                return -1
+            }
+        }
+       return  a.age - b.age 
+    }
+    )
 }
-*/
+
 
 // used interfaces, do not touch
 export interface Student {
