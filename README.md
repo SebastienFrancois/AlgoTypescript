@@ -4,8 +4,8 @@
 
 **How to participate?**
 
-- clone this repo
-- install npm dependencies `npm i`
+- clone this repo x
+- install npm dependencies `npm i` x
 - run it! `npm start`
 
 **And then, try to solve some algos:**
