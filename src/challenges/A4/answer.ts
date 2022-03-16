@@ -29,33 +29,45 @@
 // ↓ uncomment bellow lines and add your response!
 
 export default function ({ messages }: { messages: Message[] }): DayMessages[] {
-  let dates: any = [];
-  const messagesLog = {};
-  messages.forEach((message) => {
-    const utc0 = new Date(message.sentAt);
+  const messagesLog: DayMessages[] = [];
+  const days: string[] = [];
+
+  const dateToUtc0 = (date) => {
+    const utc0 = new Date(date);
     utc0.setUTCHours(0, 0, 0, 0);
-    const dayToIsoString = utc0.toISOString();
-    
-    // for (let day of ){
-    //     if(!messagesLog[day]){
-    //         messagesLog[day] = dayToIsoString
-    //     }
-    // }
-    // console.log(messagesLog)
-    // dates.filter(d => d.day === utc0.toISOString() )
-    // if(!dates.includes(date => date.day === utc0.toISOString())){
-    //     dates.push({day: utc0.toISOString()})
-    // }
+    return utc0;
+  };
 
-    // console.log(dates.includes(date => date.day === utc0.toISOString()))
-
-    // if(dates.includes(date => date.day === utc0.toISOString())){
-    //     // dates.push({day: utc0.toISOString()})
-    // }else{
-
-    // }
+  // Get DayMessages structured objects without date duplicates
+  messages.forEach((message) => {
+    const dayToIsoString = dateToUtc0(message.sentAt).toISOString();
+    if (!days.includes(dayToIsoString)) {
+      days.push(dayToIsoString);
+      messagesLog.push({ day: dayToIsoString, messages: [] });
+    }
   });
-  return dates;
+
+  // Includes messages in the right log
+  messagesLog.forEach((log) => {
+    const dayToIsoString = dateToUtc0(log.day).toISOString();
+    messages.forEach((message) => {
+      const messageDate = dateToUtc0(message.sentAt).toISOString();
+      if (dayToIsoString === messageDate) {
+        log.messages.push(message);
+      }
+    });
+    // Sort messages in each log by sentAt proprety
+    log.messages.sort(
+      (a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime()
+    );
+  });
+
+  // Sort messagesLog by day proprety
+  messagesLog.sort(
+    (a, b) => new Date(a.day).getTime() - new Date(b.day).getTime()
+  );
+
+  return messagesLog;
 }
 
 // used interfaces, do not touch
