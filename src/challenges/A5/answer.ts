@@ -40,7 +40,7 @@ export default function ({ events }: { events: Event[] }): PlanningSlot[] {
       planning.push({
         day,
         startTime: `${startTime <= 9 ? "0" : ""}${startTime}:00`,
-        endTime: ` ${endTime <= 9 ? "0" : ""}${
+        endTime: `${endTime <= 9 ? "0" : ""}${
           endTime >= 24 ? "00" : endTime
         }:00`,
       });
@@ -51,7 +51,28 @@ export default function ({ events }: { events: Event[] }): PlanningSlot[] {
 
   planning.forEach((slot: PlanningSlot) => {
     events.forEach((e) => {
-      if (slot.day === e.day && slot.startTime === e.startTime) {
+      if (Number(e.endTime.split(":")[0]) === 0) {
+        e.endTime = "24:00";
+        if (
+          (slot.day === e.day && slot.startTime === e.startTime) ||
+          (slot.day === e.day &&
+            Number(slot.startTime.split(":")[0]) <
+              Number(e.endTime.split(":")[0]) &&
+            Number(slot.startTime.split(":")[0]) >=
+              Number(e.startTime.split(":")[0]))
+        ) {
+          slot["event"] = e;
+        }
+        e.endTime = "00:00";
+      }
+      if (
+        (slot.day === e.day && slot.startTime === e.startTime) ||
+        (slot.day === e.day &&
+          Number(slot.startTime.split(":")[0]) <
+            Number(e.endTime.split(":")[0]) &&
+          Number(slot.startTime.split(":")[0]) >=
+            Number(e.startTime.split(":")[0]))
+      ) {
         slot["event"] = e;
       }
     });
