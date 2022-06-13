@@ -1,10 +1,12 @@
-import { GroupWithSillsAndClosestGroups } from "./answer";
-
-export default [
+[
   {
     name: "Groupe 1",
     skills: ["NodeJS", "ReactJS", "PHP", "MySQL"],
     closestGroups: [
+      {
+        name: "Groupe 2",
+        skills: ["NodeJS", "Ionic", "PHP", "MongoDB"],
+      },
       {
         name: "Groupe 3",
         skills: ["PHP", "MySQL", "ReactJS"],
@@ -39,10 +41,6 @@ export default [
         name: "Groupe 1",
         skills: ["NodeJS", "ReactJS", "PHP", "MySQL"],
       },
-      {
-        name: "Groupe 3",
-        skills: ["PHP", "MySQL", "ReactJS"],
-      },
     ],
   },
-] as GroupWithSillsAndClosestGroups[];
+];
