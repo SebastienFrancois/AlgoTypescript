@@ -48,15 +48,20 @@ export default function ({
       );
       const result: GroupWithSills[] = [];
       array.forEach((element) => {
-        if (element.commonSkills >= highest.commonSkills)
-          result.push(...filteredList.filter((e) => e.name === element.name));
+        if (element.commonSkills >= highest.commonSkills) {
+          const closeGroup = [
+            ...filteredList.filter((e) => e.name === element.name),
+          ];
+          closeGroup.forEach((e) =>
+            result.push({ name: e.name, skills: e.skills })
+          );
+        }
       });
+
       return result;
     };
     g["closestGroups"] = getHighestValues(compareArr);
   });
-
-  console.log(groups);
 
   return groups;
 }
