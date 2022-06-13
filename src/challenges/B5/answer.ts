@@ -1,10 +1,10 @@
 /**
- * In this challenge, you have to split up a video in several successive segments 
+ * In this challenge, you have to split up a video in several successive segments
  * that can be either segments with notes or without.
- * 
+ *
  * Successive = the end time of a segment must be the start time of the next one.
  * Also FYI, duration are in the format "HH:mm:ss" (hours, minutes, seconds)
- * 
+ *
  * Example:
  * Input: {
  *      videoDuration: "01:33:12",
@@ -31,20 +31,53 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
+
 export default function ({ video }: { video: VideoWithNotes }): VideoSegment[] {
-    return [];
+  let orderedSequences: VideoSegment[] = video.notes.sort((a, b) =>
+    a.fromTime.localeCompare(b.fromTime)
+  );
+  let output: VideoSegment[] = orderedSequences;
+  for (let i = 0; i < orderedSequences.length; i++) {
+    if (i === 0 && orderedSequences[i].fromTime !== "00:00:00") {
+      output.unshift({
+        fromTime: "00:00:00",
+        toTime: orderedSequences[i].fromTime,
+      });
+    }
+    if (
+      i === orderedSequences.length - 1 &&
+      orderedSequences[i].toTime !== video.videoDuration
+    ) {
+      output.push({
+        fromTime: orderedSequences[i].toTime,
+        toTime: video.videoDuration,
+      });
+    }
+  }
+  orderedSequences = output;
+  let CLEBRUITDEMESBOULESCONTRETESFESSES: VideoSegment[] = [];
+  for (let i = 0; i < orderedSequences.length - 1; i++) {
+    if (orderedSequences[i].toTime !== orderedSequences[i + 1].fromTime) {
+      CLEBRUITDEMESBOULESCONTRETESFESSES.push({
+        fromTime: orderedSequences[i].toTime,
+        toTime: orderedSequences[i + 1].fromTime,
+      });
+    }
+  }
+  console.log("clap clap 🎉");
+  return [...output, ...CLEBRUITDEMESBOULESCONTRETESFESSES].sort((a, b) =>
+    a.fromTime.localeCompare(b.fromTime)
+  );
 }
-*/
 
 // used interfaces, do not touch
 export interface VideoWithNotes {
-    videoDuration: string;
-    notes: { fromTime: string, toTime: string, note: string }[]
+  videoDuration: string;
+  notes: { fromTime: string; toTime: string; note: string }[];
 }
 
 export interface VideoSegment {
-    fromTime: string;
-    toTime: string;
-    note?: string;
+  fromTime: string;
+  toTime: string;
+  note?: string;
 }
